@@ -67,6 +67,9 @@ export class Data implements DataItem {
   public addEducation(education:EducationItem){
     this.educations.push(education);
   }
+  public deleteEducation(id:string){
+    this.educations = this.educations.filter((item)=> item.id!==id)
+  }
   public addJob(job:JobItem){
     this.jobs.push(job);
   }
