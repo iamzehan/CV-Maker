@@ -21,8 +21,14 @@ export default function Jobs({
   };
 
   const handleDelete = (id: string) => {
+    // set view
     setItems((prev) => prev.filter((item) => item !== id));
+    
+    // set data
+    data.deleteJob(id);
+    setData(data);
   };
+  
   return (
     <>
       <fieldset className="flex flex-col items-center gap-2 w-[90%]">
