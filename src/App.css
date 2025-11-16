@@ -39,6 +39,10 @@ form {
   input:disabled, label:has(+input:disabled){
     @apply text-gray-200/20
   }
+
+  button:active, input[type="button"]:active{
+    @apply scale-95;
+  }
 }
 
 @keyframes logo-spin {
