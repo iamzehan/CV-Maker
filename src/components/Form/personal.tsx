@@ -1,5 +1,5 @@
 import { Data } from "../../lib/utils";
-import { Add } from "@mui/icons-material";
+import { Save, ChevronRight } from "@mui/icons-material";
 import { useRef } from "react";
 export default function Personal({
   data,
@@ -45,6 +45,7 @@ export default function Personal({
               type="email"
               name="email"
               placeholder="you@example.com"
+              required
             ></input>
           </div>
         </div>
@@ -52,10 +53,11 @@ export default function Personal({
         <div className="self-end md:self-center py-10">
           <button
             onClick={() => formRef.current?.requestSubmit()}
-            className="btn-primary p-3 md:px-3 md:py-1 rounded-full md:rounded flex items-center gap-2"
+            className="btn-primary p-3 md:px-3 md:py-1 rounded flex items-center gap-2"
           >
-            <span className="hidden md:block text-xl">Add</span>
-            <Add fontSize="medium" />
+            <span className="hidden md:block text-xl">Save</span>
+            <Save fontSize="medium" />
+            <ChevronRight fontSize="medium" className="block md:hidden! animate-pulse" />
           </button>
         </div>
       </fieldset>
