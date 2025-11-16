@@ -8,10 +8,10 @@ function getID() {
 
 export default function Educations({
   data,
-  onSet,
+  setData,
 }: {
   data: Data;
-  onSet: (data: Data) => void;
+  setData: (data: Data) => void;
 }) {
   const [items, setItems] = useState<string[]>([]);
 
@@ -22,7 +22,7 @@ export default function Educations({
 
   const handleDelete = (id: string) => {
     setItems((prev) => prev.filter((item) => item !== id));
-    onSet({...data, education: data.education.filter((item)=> item.id!==id)});
+    setData({...data, education: data.education.filter((item)=> item.id!==id)});
   };
   return (
     <>
@@ -65,7 +65,7 @@ export default function Educations({
             id={id}
             index={(idx + 1).toString()}
             onDelete={handleDelete}
-            onSet={onSet}
+            setData={setData}
             data={data}
           />
         ))}
@@ -109,10 +109,10 @@ interface EducationProps {
   index: string;
   data: Data;
   onDelete: (id: string) => void;
-  onSet: (data: Data) => void;
+  setData: (data: Data) => void;
 }
 
-function Education({ id, index, data, onDelete, onSet }: EducationProps) {
+function Education({ id, index, data, onDelete, setData }: EducationProps) {
   const formRef = useRef<HTMLFormElement>(null);
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -128,7 +128,7 @@ function Education({ id, index, data, onDelete, onSet }: EducationProps) {
     const exists = data.education.find(val => val.id===parsedData.id);
     if (!exists){
       data.education.push(parsedData);
-      onSet(data);
+      setData(data);
       console.log(data);
     }
   }
