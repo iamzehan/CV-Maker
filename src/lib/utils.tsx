@@ -79,4 +79,13 @@ export class Data implements DataItem {
   public addJob(job:JobItem){
     this.jobs.push(job);
   }
+
+  public updateJob(job:JobItem):void{
+    const index = this.jobs.findIndex(item => item.id===job.id);
+    this.jobs[index] = job;
+  }
+
+  public deleteJob(id:string):void{
+    this.jobs = this.jobs.filter((item)=> item.id === id);
+  }
 }
