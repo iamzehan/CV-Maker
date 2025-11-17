@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import {EditSquare, Visibility} from '@mui/icons-material';
-export default function Navigation() {
+export default function Navigation({setPath}:{setPath:(path:string)=> void}) {
   const [active, setActive] = useState<number>(0);
 
   // Strongly typed refs
@@ -18,12 +18,19 @@ export default function Navigation() {
 
     sliderRef.current.style.width = `${activeItem.offsetWidth}px`;
     sliderRef.current.style.left = `${activeItem.offsetLeft}px`;
-  }, [active]);
+
+    if(active===0){
+        setPath("Edit");
+    }
+    else if(active===1){
+        setPath("Preview");
+    }
+  }, [active, setPath]);
 
   return (
     <div
       className="
-      flex flex-row w-full justify-center items-center shadow 
+      flex flex-row w-full md:w-screen justify-center items-center shadow 
       fixed top-0 left-0 dark:bg-zinc-950/30 backdrop-blur-2xl
     "
     >
@@ -37,9 +44,7 @@ export default function Navigation() {
             `}
             onClick={() => setActive(0)}
           >
-            <a>
             Edit <EditSquare fontSize="small"/>
-            </a>
           </li>
 
           <li
@@ -50,7 +55,7 @@ export default function Navigation() {
             `}
             onClick={() => setActive(1)}
           >
-            <a>
+            <a href="#Preview">
                 Preview <Visibility fontSize="small"/>
                 </a>
           </li>
