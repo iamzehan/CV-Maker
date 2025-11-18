@@ -1,4 +1,4 @@
-# CV-Maker
+# Resume Hero
 
 Fillup the form and get a resume ready instantly. 
 
@@ -9,9 +9,16 @@ Fillup the form and get a resume ready instantly.
 - UI has all devices support.
 
 **Drawbacks**: 
-- Form history is non-persistant (You lose your data with page refresh - going to fix that in the next version).
+- Data is completely reliant on two states (data, viewData)
+- Form history is non-persistant (You lose your data with page refresh - that's a problem for another day).
 - Can't print the resume yet. 
+- Doesn't have more templates.
+- Doesn't save data.
+- Doesn't have SaaS characteristics.
 
+*Note*
+
+`viewData` is an immutable copy of the `data` changed with stateAction after every `setData()` operation. When viewData changes, the `View` component gets re-rendered by injection of `viewData` just in time. 
 
 <center><h2> Let's have a look </h2></center> 
 
