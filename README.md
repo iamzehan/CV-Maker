@@ -5,7 +5,7 @@ Fillup the form and get a resume ready instantly.
 **What this app does**: 
 
 - Takes Dynamic User input via form.
-- Adds renders a resume in the preview section.
+- Renders a resume in a predetermined template in the preview section.
 - UI has all devices support.
 
 **Drawbacks**: 
