@@ -13,7 +13,7 @@ export default function View({ data }: { data: DataItem }) {
   if (isEmpty) {
     return (
       <div className="w-screen h-screen flex justify-center">
-        <p className="text-center font-bold text-gray-200/20 p-10 border-2 border-dashed rounded border-gray-200/20 h-fit w-[90%] lg:w-[50%]">
+        <p className="text-center font-bold text-gray-500/30 p-10 border-2 border-dashed rounded border-gray-500/20 h-fit w-[90%] lg:w-[50%]">
           Nothing added yet
         </p>
       </div>
