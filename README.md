@@ -22,7 +22,7 @@ Yes! A lot of room really.
 
 1. Templates are easy to add, so that's one checked. Since our `View` is separated, different templates are just different components. `View<Layout<Pages<[...TemplateComponents]`
 
-2. Can it be a `Saas` yes. We already followed a ORM schema to collect our data, they are type safe and all our forms need are API methods implemented in them to perform server side requests.
+2. Can it be a `SaaS`? Yes, it's a typical `SaaS` problem. We already followed an ORM schema to collect our data, they are type safe and all our forms need are API methods implemented in them to perform server side requests.
 
 3. All we lack for a SaaS here: a Server for our API endpoints and a Database. Then we implement our user model to integrate our client side Data for storage. 
 
