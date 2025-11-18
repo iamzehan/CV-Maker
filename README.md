@@ -16,9 +16,21 @@ Fillup the form and get a resume ready instantly.
 - Doesn't save data.
 - Doesn't have SaaS characteristics.
 
-*Note*
+**Is there any room to build upon it?**
 
-`viewData` is an immutable copy of the `data` changed with stateAction after every `setData()` operation. When viewData changes, the `View` component gets re-rendered by injection of `viewData` just in time. 
+Yes! A lot of room really. 
+
+1. Templates are easy to add, so that's one checked. Since our `View` is separated, different templates are just different components. `View<Layout<Pages<[...TemplateComponents]`
+
+2. Can it be a `Saas` yes. We already followed a ORM schema to collect our data, they are type safe and all our forms need are API methods implemented in them to perform server side requests.
+
+3. All we lack for a SaaS here: a Server for our API endpoints and a Database. Then we implement our user model to integrate our client side Data for storage. 
+
+4. We need links! Shareable links for the resumes, one that stays the same even after updating the resume. Which should act like their portfolio website of some sort. But the user can choose to publish or unpublish their resume from that link, can also set timers for viewership and can also have analytics for specific sections in the resume.
+
+**Note (Why this is a rudimentary solution):**
+
+`viewData` is an immutable copy of the `data` changed with stateAction after every `setData()` operation. When `viewData` changes, the `View` component gets re-rendered by injection of `viewData` just in time. 
 
 <center><h2> Let's have a look </h2></center> 
 
