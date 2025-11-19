@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy } from "react";
 import clsx from "clsx";
-import { Add as AddIcon, Save, Delete, EditSquare } from "@mui/icons-material";
+
+import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
 import { Data, Education as Edu, type EducationItem } from "../../lib/utils";
+
+const EducationViewMode = lazy(() => import("./EducationViewMode"));
 
 function getID() {
   return self.crypto.randomUUID();
@@ -87,14 +90,18 @@ export default function Educations({
             data={data}
           />
         ))}
+
+        {/* Adde new items */}
         <div
           className={clsx(
-            ["w-full flex justify-center"],
+            ["w-full flex justify-center items-center lg:w-[50%]"],
             { hidden: items.length == 0 },
             { block: items.length > 0 }
           )}
         >
+          <span className="h-1 w-full bg-gray-500/20 rounded text-gray-500"></span>
           <Add onAdd={handleAdd} />
+          <span className="h-1 w-full bg-gray-500/20 rounded"></span>
         </div>
       </div>
     </>
@@ -109,10 +116,10 @@ function Add({
   return (
     <>
       <button
-        id="AddJobs"
+        id="addEducation"
         onClick={onAdd}
         className="
-            p-2 bg-blue-500! text-white
+            md:p-2 bg-blue-500! text-white
             rounded-full
           "
       >
@@ -162,12 +169,19 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
       setData(data);
     }
   }
-
   return (
     <>
-      <ViewMode data={viewData} viewMode={viewMode} setViewMode={setViewMode} />
-      <form key={id} ref={formRef} onSubmit={handleSubmit}
-      className={clsx(["relative"], {"hidden!":viewMode}, {"block!":!viewMode})}>
+      <div
+        className={clsx(["w-full lg:w-[50%] mb-5"], { hidden: !viewMode }, { block: viewMode })}
+      >
+        <EducationViewMode data={viewData} setViewMode={setViewMode} />
+      </div>
+      <form
+        key={id}
+        ref={formRef}
+        onSubmit={handleSubmit}
+        className={clsx({ "hidden!": viewMode }, { "block!": viewMode })}
+      >
         <fieldset
           id={id.toString()}
           className="relative shadow-sm flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
@@ -230,39 +244,5 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
         </fieldset>
       </form>
     </>
-  );
-}
-
-function ViewMode({
-  data,
-  viewMode,
-  setViewMode,
-}: {
-  data: EducationItem | null;
-  viewMode: boolean;
-  setViewMode: (T: boolean) => void;
-}) {
-  return (
-    <div
-      className={clsx(
-        ["flex items-center px-2 w-full shadow shadow-gray-500/20 rounded"],
-        { block: viewMode },
-        { hidden: !viewMode }
-      )}
-    >
-      <div className="flex flex-col w-full p-2">
-        <p className="md:text-3xl font-bold text-blue-500">
-          {data?.institute} {data?.year}
-        </p>
-        <p>{data?.degree}</p>
-      </div>
-      <button
-        onClick={() => setViewMode(false)}
-        className="flex items-center gap-2 w-fit h-fit rounded p-2 md:border md:border-blue-500"
-      >
-        <span className="md:text-xl hidden md:block">Edit</span>
-        <EditSquare className="text-blue-500" />
-      </button>
-    </div>
   );
 }

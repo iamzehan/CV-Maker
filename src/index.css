@@ -20,6 +20,9 @@
   @apply bg-blue-500 text-white;
 }
 
+fieldset{
+  @apply shadow-none md:shadow
+}
 
 body {
   margin: 0;
@@ -57,6 +60,9 @@ button:focus-visible {
   :root {
     color: #213547;
     background-color: #ffffff;
+  }
+  fieldset{
+    @apply shadow-none md:shadow
   }
   a:hover {
     color: #747bff;
