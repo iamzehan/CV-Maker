@@ -1,4 +1,4 @@
-import type { JobItem } from "../../lib/utils";
+import type { JobItem } from "../../../lib/utils";
 import { EditSquare } from "@mui/icons-material";
 import { Suspense } from "react";
 export default function JobViewMode({
