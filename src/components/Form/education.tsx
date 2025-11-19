@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import { Add as AddIcon, Save, Delete } from "@mui/icons-material";
-import { Data, Education as Edu } from "../../lib/utils";
+import { Add as AddIcon, Save, Delete, EditSquare } from "@mui/icons-material";
+import { Data, Education as Edu, type EducationItem } from "../../lib/utils";
+
 function getID() {
   return self.crypto.randomUUID();
 }
@@ -131,7 +132,8 @@ interface EducationProps {
 
 function Education({ id, index, data, onDelete, setData }: EducationProps) {
   const formRef = useRef<HTMLFormElement>(null);
-
+  const [viewData, setViewData] = useState<EducationItem | null>(null);
+  const [viewMode, setViewMode] = useState(false);
   // handling form submit
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -144,6 +146,10 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
       rawData.year as string
     );
 
+    // set View Data for view mode
+    setViewData(parsedData);
+    // set View Mode for view
+    setViewMode(true);
     const exists = data.educations.find((val) => val.id === parsedData.id);
     // add new education
     if (!exists) {
@@ -158,66 +164,105 @@ function Education({ id, index, data, onDelete, setData }: EducationProps) {
   }
 
   return (
-    <form key={id} ref={formRef} onSubmit={handleSubmit} className="reltive">
-      <fieldset
-        id={id.toString()}
-        className="relative shadow-sm flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
+    <>
+      <ViewMode data={viewData} viewMode={viewMode} setViewMode={setViewMode} />
+      <form key={id} ref={formRef} onSubmit={handleSubmit}
+      className={clsx(["relative"], {"hidden!":viewMode}, {"block!":!viewMode})}>
+        <fieldset
+          id={id.toString()}
+          className="relative shadow-sm flex flex-col gap-2 justify-center border-t border-b rounded-none! py-3 md:border md:p-3 md:rounded!"
+        >
+          <legend className="text-center">Education {index} </legend>
+
+          <label htmlFor="_id" className="hidden">
+            id
+          </label>
+          <input
+            type="text"
+            name="_id"
+            className="hidden"
+            placeholder="id"
+            defaultValue={id.toString() || ""}
+          />
+          <label htmlFor="institute">Name of Institute</label>
+          <input
+            type="text"
+            name="institute"
+            placeholder="Institute name"
+            required
+          />
+
+          <label htmlFor="degree">Degree/Diploma</label>
+          <input
+            type="text"
+            name="degree"
+            placeholder="e.g. Bachelor of Arts"
+            required
+          />
+
+          <label htmlFor="year">Passing year</label>
+          <input
+            type="text"
+            name="year"
+            placeholder="Passing year"
+            maxLength={4}
+            required
+          />
+          <div className=" w-full flex gap-2 justify-between md:justify-end">
+            <button
+              type="button"
+              formMethod="POST"
+              onClick={() => formRef.current?.requestSubmit()}
+              className="btn-primary flex-1 md:flex-0 w-fit rounded px-2 py-1"
+            >
+              <Save className="text-white" />
+            </button>
+            <button
+              className="border flex-1 md:flex-0 border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
+              onClick={(e) => {
+                e.preventDefault();
+                onDelete(id);
+              }}
+            >
+              <Delete className="text-red-500" />
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </>
+  );
+}
+
+function ViewMode({
+  data,
+  viewMode,
+  setViewMode,
+}: {
+  data: EducationItem | null;
+  viewMode: boolean;
+  setViewMode: (T: boolean) => void;
+}) {
+  return (
+    <div
+      className={clsx(
+        ["flex items-center px-2 w-full shadow shadow-gray-500/20 rounded"],
+        { block: viewMode },
+        { hidden: !viewMode }
+      )}
+    >
+      <div className="flex flex-col w-full p-2">
+        <p className="md:text-3xl font-bold text-blue-500">
+          {data?.institute} {data?.year}
+        </p>
+        <p>{data?.degree}</p>
+      </div>
+      <button
+        onClick={() => setViewMode(false)}
+        className="flex items-center gap-2 w-fit h-fit rounded p-2 md:border md:border-blue-500"
       >
-        <legend className="text-center">Education {index} </legend>
-        <label htmlFor="_id" className="hidden">
-          id
-        </label>
-        <input
-          type="text"
-          name="_id"
-          className="hidden"
-          placeholder="id"
-          defaultValue={id.toString() || ""}
-        />
-        <label htmlFor="institute">Name of Institute</label>
-        <input
-          type="text"
-          name="institute"
-          placeholder="Institute name"
-          required
-        />
-
-        <label htmlFor="degree">Degree/Diploma</label>
-        <input
-          type="text"
-          name="degree"
-          placeholder="e.g. Bachelor of Arts"
-          required
-        />
-
-        <label htmlFor="year">Passing year</label>
-        <input
-          type="text"
-          name="year"
-          placeholder="Passing year"
-          maxLength={4}
-          required
-        />
-        <div className=" w-full flex gap-2 justify-between md:justify-end">
-          <button
-            type="button"
-            formMethod="POST"
-            onClick={() => formRef.current?.requestSubmit()}
-            className="btn-primary flex-1 md:flex-0 w-fit rounded px-2 py-1"
-          >
-            <Save className="text-white" />
-          </button>
-          <button
-            className="border flex-1 md:flex-0 border-red-500 bg-gray-500/20 w-fit rounded px-2 py-1"
-            onClick={(e) => {
-              e.preventDefault();
-              onDelete(id);
-            }}
-          >
-            <Delete className="text-red-500" />
-          </button>
-        </div>
-      </fieldset>
-    </form>
+        <span className="md:text-xl hidden md:block">Edit</span>
+        <EditSquare className="text-blue-500" />
+      </button>
+    </div>
   );
 }
