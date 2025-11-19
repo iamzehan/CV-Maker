@@ -47,11 +47,16 @@ export default function Notifications({
       <div
         className={clsx(
           `${notify.style}`,
-          "fixed w-full z-500 rounded-b md:rounded px-5 py-1 md:w-fit md:mt-20",
+          "fixed w-full z-500 rounded-b md:rounded px-5 py-1",
           "text-center text-shadow-2xs",
           "shadow",
           "transition-transform origin-top ease-in-out duration-500",
-          { "-translate-y-full": !visible, "translate-y-0": visible }
+          { "-translate-y-full": !visible, "translate-y-0": visible },
+          "md:w-fit md:top-[20%] md:right-0 md:transform-none rounded-r-none!",
+          {"md:translate-x-full":!visible,
+            "md:-translate-y-full":visible
+           }
+
         )}
       >
         {notify.message}
