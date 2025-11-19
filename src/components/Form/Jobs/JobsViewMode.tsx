@@ -1,6 +1,5 @@
 import type { JobItem } from "../../../lib/utils";
 import { EditSquare } from "@mui/icons-material";
-import { Suspense } from "react";
 export default function JobViewMode({
   data,
   setViewMode,
@@ -9,7 +8,6 @@ export default function JobViewMode({
   setViewMode: (T: boolean) => void;
 }) {
   return (
-    <Suspense fallback={<p className="w-full text-center">Loading...</p>}>
     <div
       className="flex items-center px-2 w-full shadow shadow-gray-500/20 rounded"
     >
@@ -27,6 +25,5 @@ export default function JobViewMode({
         <EditSquare className="text-blue-500" />
       </button>
     </div>
-    </Suspense>
   );
 }

@@ -1,7 +1,9 @@
 import { Save, Delete } from "@mui/icons-material";
-import {Data, Job as JobData, type JobItem } from "../../../lib/utils";
-import { useState, useRef } from "react";
-import JobViewMode from "./JobsViewMode";
+import { Data, Job as JobData, type JobItem } from "../../../lib/utils";
+import { useState, useRef, lazy, Suspense } from "react";
+
+const JobViewMode = lazy(() => import("./JobsViewMode"));
+
 import clsx from "clsx";
 interface JobProps {
   id: string;
@@ -10,7 +12,6 @@ interface JobProps {
   onDelete: (id: string) => void;
   setData: (data: Data) => void;
 }
-
 
 export default function Job({ id, index, data, onDelete, setData }: JobProps) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -56,12 +57,14 @@ export default function Job({ id, index, data, onDelete, setData }: JobProps) {
     <>
       <div
         className={clsx(
-          ["w-full lg:w-[50%] mb-5"],
-          { hidden: !viewMode },
-          { block: viewMode }
+          ["w-full lg:w-[50%] mb-5"]
         )}
       >
-        <JobViewMode data={viewData} setViewMode={setViewMode} />
+        {viewMode && (
+          <Suspense fallback={<p className="w-full text-center">Loading...</p>}>
+            <JobViewMode data={viewData} setViewMode={setViewMode} />
+          </Suspense>
+        )}
       </div>
       <form
         key={id}
