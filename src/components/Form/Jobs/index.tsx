@@ -12,9 +12,11 @@ function getID() {
 export default function Jobs({
   data,
   setData,
+  setNotification
 }: {
   data: Data;
   setData: (data: Data) => void;
+  setNotification: (notification: string)=>void;
 }) {
   const [items, setItems] = useState<string[]>([]);
   const added = items.length > 0;
@@ -41,6 +43,7 @@ export default function Jobs({
     // Setting the data after delete
     data.deleteJob(id);
     setData(data);
+    setNotification('delete');
   };
   return (
     <>
@@ -69,6 +72,7 @@ export default function Jobs({
             setData={setData}
             index={(idx + 1).toString()}
             onDelete={handleDelete}
+            setNotification={setNotification}
           />
         ))}
         {/* Add new items */}

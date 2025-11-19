@@ -11,9 +11,10 @@ interface JobProps {
   data: Data;
   onDelete: (id: string) => void;
   setData: (data: Data) => void;
+  setNotification: (notification: string)=> void;
 }
 
-export default function Job({ id, index, data, onDelete, setData }: JobProps) {
+export default function Job({ id, index, data, onDelete, setData, setNotification }: JobProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [viewMode, setViewMode] = useState(false);
 
@@ -46,11 +47,13 @@ export default function Job({ id, index, data, onDelete, setData }: JobProps) {
     if (!exists) {
       data.addJob(parsedData);
       setData(data);
+      setNotification('add');
     }
     // update if exists
     else if (exists) {
       data.updateJob(parsedData);
       setData(data);
+      setNotification('update');
     }
   }
   return (
