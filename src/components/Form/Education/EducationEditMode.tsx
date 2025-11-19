@@ -9,6 +9,7 @@ interface EducationProps {
   data: Data;
   onDelete: (id: string) => void;
   setData: (data: Data) => void;
+  setNotification: (notification:string) => void;
 }
 
 export default function Education({
@@ -17,6 +18,7 @@ export default function Education({
   data,
   onDelete,
   setData,
+  setNotification
 }: EducationProps) {
   const formRef = useRef<HTMLFormElement>(null);
   // view controller state & data
@@ -44,11 +46,13 @@ export default function Education({
     if (!exists) {
       data.addEducation(parsedData);
       setData(data);
+      setNotification('add');
     }
     // update if exists
     else if (exists) {
       data.updateEducation(parsedData);
       setData(data);
+      setNotification('update');
     }
   }
   return (

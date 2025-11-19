@@ -13,9 +13,11 @@ function getID() {
 export default function Educations({
   data,
   setData,
+  setNotification
 }: {
   data: Data;
   setData: (data: Data) => void;
+  setNotification: (notification:string) => void;
 }) {
   // items to add
   const [items, setItems] = useState<string[]>([]);
@@ -42,6 +44,7 @@ export default function Educations({
     // Setting the data after delete
     data.deleteEducation(id);
     setData(data);
+    setNotification('delete');
   };
   return (
     <>
@@ -70,6 +73,7 @@ export default function Educations({
               index={(idx + 1).toString()}
               onDelete={handleDelete}
               setData={setData}
+              setNotification={setNotification}
             />
           </>
         ))}

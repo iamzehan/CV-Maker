@@ -1,5 +1,5 @@
 import "./App.css";
-
+import Notifications from "./components/Notifications";
 import Navigation from "./components/Navigation";
 import Form from "./components/Form";
 import View from "./components/View";
@@ -10,6 +10,7 @@ import clsx from "clsx";
 function App() {
   const [path, setPath] = useState("Edit");
   const [data, setData] = useState(new Data());
+  const [notification, setNotification] = useState<string | null>(null);
   function handleDataState(newData: Data) {
     setData(newData);
   }
@@ -34,11 +35,12 @@ function App() {
     flex flex-col items-center
     w-full h-screen"
     >
+      <Notifications notification={notification} setNotification={setNotification} />
       <Navigation setPath={setPath} />
 
       <div className="content flex justify-center over pb-25! mt-3 md:mt-20">
         <section id="Edit" className={clsx({ hidden: path === "Preview" })}>
-          <Form data={data} setData={handleDataState} />
+          <Form data={data} setData={handleDataState} setNotification={setNotification}/>
         </section>
         <section id="Preview" className={clsx({ hidden: path === "Edit" })}>
           <View data={viewData} />
